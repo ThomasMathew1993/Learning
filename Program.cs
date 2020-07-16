@@ -266,17 +266,35 @@ namespace DataStructure
             //stest.Pop();
             //Console.WriteLine(stest.Peek());
 
-            var test = new BinarySearchTree();
-            test.Insert(5);
-            test.Insert(48);
-            test.Insert(78);
-            test.Insert(2);
-            test.Insert(67);
-            test.Insert(1);
-            test.Insert(-23);
-            test.Insert(45);
-            test.Insert(0);
-            var look = test.Lookup(45);
+            //var test = new BinarySearchTree();
+            //test.Insert(5);
+            //test.Insert(48);
+            //test.Insert(78);
+            //test.Insert(2);
+            //test.Insert(67);
+            //test.Insert(1);
+            //test.Insert(-23);
+            //test.Insert(45);
+            //test.Insert(0);
+            //var look = test.Lookup(45);
+
+            var test = new UserGraph();
+            test.AddVertex(0);
+            test.AddVertex(1);
+            test.AddVertex(2);
+            test.AddVertex(3);
+            test.AddVertex(4);
+            test.AddVertex(5);
+            test.AddVertex(6);
+            test.AddEdges(6, 5);
+            test.AddEdges(5, 4);
+            test.AddEdges(4, 3);
+            test.AddEdges(1, 3);
+            test.AddEdges(1, 2);
+            test.AddEdges(1, 0);
+            test.AddEdges(2, 4);
+            test.AddEdges(2, 0);
+
 
             Console.Read();
 
