@@ -186,22 +186,151 @@ namespace DataStructure
 
         //public double FindMedianSortedArrays(int[] nums1, int[] nums2)
         //{
-
         //}
-        public class ListNode
+        public static long Factorial(int value)
         {
-            public int val;
-            public ListNode next;
-            public ListNode(int val = 0, ListNode next = null)
+            if (value > 0)
+                return value * Factorial(value - 1);
+            return 1;
+        }
+
+        public static long Fibonacci(int value)
+        {
+            if (value < 2)
+                return value;
+            return Fibonacci(value - 1) + Fibonacci(value - 2);
+        }
+
+        public static void BubbleSort(int[] arr)
+        {
+            var timer = DateTime.Now;
+            for (int i = 0; i < arr.Length; i++)
             {
-                this.val = val;
-                this.next = next;
+                for (int j = 0; j < arr.Length - 1; j++)
+                {
+                    if (arr[j] > arr[j + 1])
+                    {
+                        var temp = arr[j];
+                        arr[j] = arr[j + 1];
+                        arr[j + 1] = temp;
+                    }
+                }
+            }
+            foreach (var a in arr)
+            {
+                Console.WriteLine(a);
+            }
+            Console.WriteLine("Time" + (DateTime.Now - timer).TotalSeconds.ToString());
+        }
+
+        public static void SelectionSort(int[] arr)
+        {
+            var timer = DateTime.Now;
+            for (int i = 0; i < arr.Length; i++)
+            {
+                int index = i;
+                var temp = arr[i];
+                for (int j = i + 1; j < arr.Length; j++)
+                {
+                    if (arr[j] < arr[index])
+                    {
+                        index = j;
+                    }
+                }
+                arr[index] = temp;
+                arr[i] = arr[index];
+            }
+            foreach (var a in arr)
+            {
+                Console.WriteLine(a);
+            }
+            Console.WriteLine("Time" + (DateTime.Now - timer).TotalSeconds.ToString());
+        }
+
+        public static void InsertionSort(int[] arr)
+        {
+            var timer = DateTime.Now;
+            int n = arr.Length, val, flag;
+            for (int i = 1; i < n; i++)
+            {
+                val = arr[i];
+                flag = 0;
+                for (int j = i - 1; j >= 0 && flag != 1;)
+                {
+                    if (val < arr[j])
+                    {
+                        arr[j + 1] = arr[j];
+                        j--;
+                        arr[j + 1] = val;
+                    }
+                    else flag = 1;
+                }
+            }
+            foreach (var a in arr)
+            {
+                Console.WriteLine(a);
+            }
+            Console.WriteLine("Time" + (DateTime.Now - timer).TotalSeconds.ToString());
+        }
+
+        public static List<int> MergeSort(List<int> arr)
+        {
+            if (arr.Count == 1)
+            {
+                return arr;
+            }
+            else
+            {
+                var middle = arr.Count / 2;
+                var leftAr = SplitArray(arr, 0, middle);
+                var rightAr = SplitArray(arr, middle);
+
+                return Merge(MergeSort(leftAr), MergeSort(rightAr));
             }
         }
-      
+
+        private static List<int> SplitArray(List<int> arr, int start, int? end = null)
+        {
+            List<int> ar = new List<int>();
+            var last = end != null ? end : arr.Count;
+            for (int i = start; i < last; i++)
+            {
+                ar.Add(arr[i]);
+            }
+            return ar;
+        }
+
+        private static List<int> Merge(List<int> larr, List<int> rarr)
+        {
+            int leftindex = 0, rightindex = 0;
+            List<int> result = new List<int>();
+            while (leftindex < larr.Count && rightindex < rarr.Count)
+            {
+                if (larr[leftindex] < rarr[rightindex])
+                {
+                    result.Add(larr[leftindex]);
+                    leftindex++;
+                }
+                else
+                {
+                    result.Add(rarr[rightindex]);
+                    rightindex++;
+                }
+            }
+            return result.Concat(SplitArray(larr, leftindex)).Concat(SplitArray(rarr, rightindex)).ToList();
+        }
+
         static void Main(string[] args)
         {
-            //int[] a = new int[] { 0, 9, 9, 0, 3, 2, 1, 7, 4, 5 };
+            int[] a = new int[] { 0, 9, 9, 0, 3, 2, 1, 7, 4, 5, 92, 2, 4, 78, 35, 754, 822, 745, 655, 310, 390, 99 };
+            //BubbleSort(a);
+            //SelectionSort(a);
+            //InsertionSort(a);
+            var timer = DateTime.Now;
+            List<int> result = MergeSort(a.ToList());
+            Console.WriteLine("Time" + (DateTime.Now - timer).TotalSeconds.ToString());
+            foreach (var r in result)
+                Console.WriteLine(r);
             //var test = ContainsDuplicate(a);
             //Rotate(a, 4);
             //Console.Write(FirstDuplicat(a));
@@ -278,23 +407,25 @@ namespace DataStructure
             //test.Insert(0);
             //var look = test.Lookup(45);
 
-            var test = new UserGraph();
-            test.AddVertex(0);
-            test.AddVertex(1);
-            test.AddVertex(2);
-            test.AddVertex(3);
-            test.AddVertex(4);
-            test.AddVertex(5);
-            test.AddVertex(6);
-            test.AddEdges(6, 5);
-            test.AddEdges(5, 4);
-            test.AddEdges(4, 3);
-            test.AddEdges(1, 3);
-            test.AddEdges(1, 2);
-            test.AddEdges(1, 0);
-            test.AddEdges(2, 4);
-            test.AddEdges(2, 0);
+            //var test = new UserGraph();
+            //test.AddVertex(0);
+            //test.AddVertex(1);
+            //test.AddVertex(2);
+            //test.AddVertex(3);
+            //test.AddVertex(4);
+            //test.AddVertex(5);
+            //test.AddVertex(6);
+            //test.AddEdges(6, 5);
+            //test.AddEdges(5, 4);
+            //test.AddEdges(4, 3);
+            //test.AddEdges(1, 3);
+            //test.AddEdges(1, 2);
+            //test.AddEdges(1, 0);
+            //test.AddEdges(2, 4);
+            //test.AddEdges(2, 0);
 
+            //Console.WriteLine(Factorial(5));
+            //Console.WriteLine(Fibonacci(5));
 
             Console.Read();
 
