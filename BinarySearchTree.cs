@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -127,7 +128,7 @@ namespace DataStructure
                     {
                         var leftmost = currentNode.RightNode.LeftNode;
                         var leftmostParent = currentNode.RightNode;
-                        while(leftmost.LeftNode != null)
+                        while (leftmost.LeftNode != null)
                         {
                             leftmostParent = leftmost;
                             leftmost = leftmost.LeftNode;
@@ -136,7 +137,7 @@ namespace DataStructure
                         leftmost.LeftNode = currentNode.LeftNode;
                         leftmost.RightNode = currentNode.RightNode;
 
-                        if(parentNode == null)
+                        if (parentNode == null)
                             this.rootNode = leftmost;
                         else
                         {
@@ -148,6 +149,84 @@ namespace DataStructure
                     }
                 }
             }
+        }
+        public void BreadthFirstSearch()
+        {
+            var currentNode = this.rootNode;
+            var final = new List<int>();
+            var queue = new Queue<BinaryNode>();
+            queue.Enqueue(currentNode);
+            while (queue.Count > 0)
+            {
+                currentNode = queue.Dequeue();
+                final.Add(currentNode.Value);
+                if (currentNode.LeftNode != null)
+                {
+                    queue.Enqueue(currentNode.LeftNode);
+                }
+                if (currentNode.RightNode != null)
+                {
+                    queue.Enqueue(currentNode.RightNode);
+                }
+            }
+            foreach (var f in final)
+            {
+                Console.WriteLine(f);
+            }
+        }
+        private List<int> inOrderList = new List<int>();
+        private List<int> preOrderList = new List<int>();
+        private List<int> postOrderList = new List<int>();
+        public void DFS()
+        {
+            DFSInOrder(this.rootNode);
+            foreach (var f in inOrderList)
+                Console.WriteLine(f);
+            DFSPreOrder(this.rootNode);
+            foreach (var f in preOrderList)
+                Console.WriteLine(f);
+            DFSPostOrder(this.rootNode);
+            foreach (var f in postOrderList)
+                Console.WriteLine(f);
+        }
+
+        public void DFSInOrder(BinaryNode node)
+        {
+            if (node.LeftNode != null)
+            {
+                DFSInOrder(node.LeftNode);
+            }
+            inOrderList.Add(node.Value);
+            if(node.RightNode != null)
+            {
+                DFSInOrder(node.RightNode);
+            }
+            //inOrderList.Co
+        }
+
+        public void DFSPreOrder(BinaryNode node)
+        {
+            preOrderList.Add(node.Value);
+            if(node.LeftNode != null)
+            {
+                DFSPreOrder(node.LeftNode);
+            }
+            if(node.RightNode != null)
+            {
+                DFSPreOrder(node.RightNode);
+            }
+        }
+        public void DFSPostOrder(BinaryNode node)
+        {
+            if (node.LeftNode != null)
+            {
+                DFSPostOrder(node.LeftNode);
+            }
+            if (node.RightNode != null)
+            {
+                DFSPostOrder(node.RightNode);
+            }
+            postOrderList.Add(node.Value);
         }
     }
 

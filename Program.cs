@@ -320,17 +320,61 @@ namespace DataStructure
             return result.Concat(SplitArray(larr, leftindex)).Concat(SplitArray(rarr, rightindex)).ToList();
         }
 
+        //private static List<int> QuickSort(List<int> arr)
+        //{
+        //    var pivot = arr[arr.Count - 1];
+        //}
+
+        public bool IsValidBST(TreeNode root)
+        {
+            var currentNode = root;
+            var queue = new Queue<int>();
+            queue.Enqueue(root.val);
+            while (queue.Count > 0)
+            {
+                if (currentNode.left != null)
+                {
+                    if (currentNode.val < currentNode.left.val)
+                        return false;
+                    currentNode = currentNode.left;
+                }
+                if (currentNode.right != null)
+                {
+                    if (currentNode.val > currentNode.right.val)
+                        return false;
+                    currentNode = currentNode.right;
+                }
+            }
+            return true;
+        }
+        public static void ReverseString(char[] s)
+        {
+            var te = s.Length;
+            var test = new string(s).Reverse().ToArray();
+        }
+
+        public int SingleNumber(int[] nums)
+        {
+            return nums.GroupBy(x => x).Where(x => x.Count() == 1).Select(x=>x.Key).First();
+        }
+
+        //public int GetSum(int a, int b)
+        //{
+        //    return Math.Abs
+        //}
         static void Main(string[] args)
         {
-            int[] a = new int[] { 0, 9, 9, 0, 3, 2, 1, 7, 4, 5, 92, 2, 4, 78, 35, 754, 822, 745, 655, 310, 390, 99 };
+            var n = new char[3] { 'a', 'b', 'c' };
+            ReverseString(n);
+            //int[] a = new int[] { 0, 9, 9, 0, 3, 2, 1, 7, 4, 5, 92, 2, 4, 78, 35, 754, 822, 745, 655, 310, 390, 99 };
             //BubbleSort(a);
             //SelectionSort(a);
             //InsertionSort(a);
-            var timer = DateTime.Now;
-            List<int> result = MergeSort(a.ToList());
-            Console.WriteLine("Time" + (DateTime.Now - timer).TotalSeconds.ToString());
-            foreach (var r in result)
-                Console.WriteLine(r);
+            //var timer = DateTime.Now;
+            //List<int> result = MergeSort(a.ToList());
+            //Console.WriteLine("Time" + (DateTime.Now - timer).TotalSeconds.ToString());
+            //foreach (var r in result)
+            //    Console.WriteLine(r);
             //var test = ContainsDuplicate(a);
             //Rotate(a, 4);
             //Console.Write(FirstDuplicat(a));
@@ -406,6 +450,14 @@ namespace DataStructure
             //test.Insert(45);
             //test.Insert(0);
             //var look = test.Lookup(45);
+            //test.BreadthFirstSearch();
+            //test.DFS();
+
+            //           5
+            //       2        48
+            //    1        45        78 
+            // -23                67
+            //     0
 
             //var test = new UserGraph();
             //test.AddVertex(0);
@@ -429,6 +481,19 @@ namespace DataStructure
 
             Console.Read();
 
+        }
+
+        public class TreeNode
+        {
+            public int val;
+            public TreeNode left;
+            public TreeNode right;
+            public TreeNode(int val = 0, TreeNode left = null, TreeNode right = null)
+            {
+                this.val = val;
+                this.left = left;
+                this.right = right;
+            }
         }
     }
 }
